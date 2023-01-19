@@ -14,16 +14,16 @@ Currently if you need to produce a build for an operating system other than Linu
 
 To clone this repository
 
-    `git clone https://github.com/seanmcbroom/osu-collector-downloader`
+`git clone https://github.com/seanmcbroom/osu-collector-downloader`
 
 To install dependencies
 
-    `npm install`
+`npm install`
 
 To build and pack from source
 
-    `npm run build && npx nodegui-packer --pack ./dist`
+`npm run build && npx nodegui-packer --pack ./dist`
 
 # Requirements
 
-    - Nodejs v14.4.0+
+- Nodejs v14.4.0+

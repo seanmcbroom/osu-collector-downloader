@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=osu!Collector Downloader
+Exec=AppRun %F
+Icon=default
+Comment=
+Terminal=true
+Categories=Utility;

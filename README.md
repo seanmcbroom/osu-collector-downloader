@@ -1,4 +1,4 @@
-# osu!Collector Downloader 🔴
+# osu!Collector Downloader
 
 This program downloads beatmap collections from osu!Collector, simple as that.
 

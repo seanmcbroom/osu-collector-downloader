@@ -1,5 +1,6 @@
 const { QMainWindow, FlexLayout, QWidget, QLabel, QFileDialog, QPushButton, FileMode, QIcon, QLineEdit } = require("@nodegui/nodegui");
-const downloadCollection = require("./modules/downloadCollection.js");
+const osuCollectorClient = require("./struct/osuCollectorClient.js");
+const osuCollector = new osuCollectorClient();
 
 const win = new QMainWindow();
 win.setWindowTitle("osu!collector");
@@ -127,29 +128,29 @@ rootView.setStyleSheet(rootStyleSheet);
 // Handle directory select button
 let directory = "";
 directorySelectButton.addEventListener('clicked', (checked) => {
-    const fileDialog = new QFileDialog();
-    fileDialog.setFileMode(FileMode.Directory);
-    fileDialog.exec();
+  const fileDialog = new QFileDialog();
+  fileDialog.setFileMode(FileMode.Directory);
+  fileDialog.exec();
 
-    const directorys = fileDialog.selectedFiles();
-    directory = directorys[0];
-    directoryLabel.setText(directory);
+  const directorys = fileDialog.selectedFiles();
+  directory = directorys[0];
+  directoryLabel.setText(directory);
 })
 
 downloadButton.addEventListener('clicked', (checked) => {
-    if (directory == "") {
-        downloadStatus.setText("Directory not selected.")
-        return
-    }
+  if (directory == "") {
+    downloadStatus.setText("Directory not selected.")
+    return
+  }
 
-    const collectionId = collectionIdInput.text()
-    console.log(collectionId)
-    if (collectionId == "") {
-        downloadStatus.setText("Collection Id not selected.")
-        return
-    }
+  const collectionId = collectionIdInput.text()
+  console.log(collectionId)
+  if (collectionId == "") {
+    downloadStatus.setText("Collection Id not selected.")
+    return
+  }
 
-    downloadCollection(directory, collectionId);
+  osuCollector.downloadColleciton(directory, collectionId);
 })
 
 win.show();

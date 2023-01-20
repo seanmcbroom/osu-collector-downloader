@@ -24,6 +24,10 @@ Currently if you need to produce a build for MacOS you will need to build and pa
 
 `git clone https://github.com/seanmcbroom/osu-collector-downloader`
 
+- Change working directory
+
+`cd osu-collector-downloader`
+
 - Install dependencies
 
 `npm install`

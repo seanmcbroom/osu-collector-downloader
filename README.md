@@ -6,7 +6,7 @@ Linux - Available ✔️
 
 Windows - Available ✔️
 
-MacOS - Unavailable ❌
+MacOS - Build from source 🟨
 
 # Usage
 

@@ -4,7 +4,7 @@ This program downloads beatmap collections from osu!Collector, it's as simple as
 
 Linux - Available ✔️
 
-Windows - Unavailable ❌
+Windows - Available ✔️
 
 MacOS - Unavailable ❌
 

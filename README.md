@@ -16,10 +16,9 @@ MacOS - Unavailable ❌
 
 ![Untitled](https://user-images.githubusercontent.com/57121175/213617957-a8fa772c-b23f-4932-87bc-3088803c4e63.png)
 
+# Building from source
 
-# Building
-
-Currently if you need to produce a build for an operating system other than Linux you will need to build and pack from source, on your own operating system. Cross platform builds are not supported in this release, due to this limitation.
+Currently if you need to produce a build for MacOS you will need to build and pack from source. Cross platform builds are not supported in the packager, due to this limitation I cannot provide a MacOS build. However you're more than welcome to build from source on your own system.
 
 - Clone this repository
 

@@ -1,6 +1,6 @@
 # osu!Collector Downloader
 
-This program downloads beatmap collections from osu!Collector, simple as that.
+This program downloads beatmap collections from osu!Collector, it's as simple as that.
 
 Linux - Available ✔️
 

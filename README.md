@@ -29,7 +29,11 @@ Currently if you need to produce a build for an operating system other than Linu
 
 `npm install`
 
-- Build and pack from source
+- Initialize packager
+
+`npx nodegui-packer --init osu!Collector`
+
+- Build and package from source
 
 `npm run build && npx nodegui-packer --pack ./dist`
 

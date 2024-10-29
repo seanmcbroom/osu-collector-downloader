@@ -1,8 +1,8 @@
 const { OsuCollectorNode } = require("osu-collector-node")
 const { DownloaderHelper } = require("node-downloader-helper");
-const Constants = require("../util/Constants.js");
 const fs = require('fs');
 const path = require("path");
+const mirrors = require("../util/mirrors.js");
 
 class Client {
     /**
@@ -78,7 +78,7 @@ class Client {
             // Reattempt download with another api
             const next = (api + 1);
             if (!reattempt) return // If set to not reattempt search break recursion
-            if (!Constants.mirror[next]) return; // If there are no more apis to download from break recursion
+            if (!mirrors[next]) return; // If there are no more apis to download from break recursion
 
             console.warn(`[${beatmapId}] Reattempting download...`);
             this._attemptBeatmapsetDownload(beatmapId, downloadDirectory, next, true);

@@ -2,7 +2,7 @@
 
 This program downloads beatmap collections from osu!Collector, it's as simple as that. [Download latest release](https://github.com/seanmcbroom/osu-collector-downloader/releases/tag/alpha-v0.3.0)
 
-Linux - Available ✔️
+Linux - Build from source 🟨
 
 Windows - Available ✔️
 

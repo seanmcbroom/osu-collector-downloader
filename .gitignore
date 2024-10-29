@@ -1,3 +1,4 @@
 node_modules/
 dist/
-deploy/linux/build/
+deploy/linux/
+deploy/win32/

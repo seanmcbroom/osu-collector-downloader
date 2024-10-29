@@ -1,12 +1,22 @@
-const { QMainWindow, QIcon } = require("@nodegui/nodegui");
+const { QMainWindow, QIcon, QSystemTrayIcon } = require("@nodegui/nodegui");
+const Path = require("path");
 const RootView = require("./components/RootView");
 
 const win = new QMainWindow();
-win.setWindowTitle("osu!collector");
+win.setWindowTitle("osu!collector downloader");
 win.setFixedSize(400, 200);
 
-const icon = new QIcon("../assets/iconx200.png");
+const tray = new QSystemTrayIcon();
+
+const icon = new QIcon(
+  Path.join(__dirname, "./assets/logo.png")
+);
+
 win.setWindowIcon(icon);
+tray.setIcon(icon);
+tray.show();
+
+global.tray = tray; // prevents garbage collection of tray
 
 // Set up the root view
 const rootView = new RootView();

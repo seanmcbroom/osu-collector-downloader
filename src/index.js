@@ -1,5 +1,5 @@
 const { QMainWindow, FlexLayout, QWidget, QLabel, QFileDialog, QPushButton, FileMode, QIcon, QLineEdit } = require("@nodegui/nodegui");
-const osuCollectorClient = require("./struct/osuCollectorClient.js");
+const osuCollectorClient = require("./util/osuCollectorDownloader.js");
 const osuCollector = new osuCollectorClient();
 
 const win = new QMainWindow();

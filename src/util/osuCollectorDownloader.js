@@ -2,9 +2,9 @@ const { OsuCollectorNode } = require("osu-collector-node")
 const { DownloaderHelper } = require("node-downloader-helper");
 const fs = require('fs');
 const path = require("path");
-const mirrors = require("../util/mirrors.js");
+const mirrors = require("./mirrors.js");
 
-class Client {
+class osuCollectorDownloader {
     /**
      * Creates a new client object
      */

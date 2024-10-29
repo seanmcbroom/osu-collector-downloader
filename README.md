@@ -32,13 +32,9 @@ Currently if you need to produce a build for MacOS you will need to build and pa
 
 `npm install`
 
-- Initialize packager
+- Run the build command
 
-`npx nodegui-packer --init osu!Collector`
-
-- Build and package from source
-
-`npm run build && npx nodegui-packer --pack ./dist`
+`npm run build`
 
 # Requirements
 

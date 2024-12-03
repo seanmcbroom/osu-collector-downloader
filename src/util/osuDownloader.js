@@ -72,37 +72,48 @@ class osuDownloader extends EventEmitter {
      */
     async _attemptBeatmapsetDownload(beatmapId, downloadDirectory, api, reattempt) {
         const mirrorApi = mirrors[api];
-        const filename = `${beatmapId}(${mirrorApi.name}).osz`;
-        const beatmapDirectory = path.join(downloadDirectory, filename);
-
+        const fileUrl = `${mirrorApi.url}${beatmapId}`;
+    
         // If file is already downloaded, skip
-        if (fs.existsSync(beatmapDirectory)) {
+        const existingFiles = fs.readdirSync(downloadDirectory);
+        const alreadyDownloaded = existingFiles.some(file => file.includes(beatmapId));
+        if (alreadyDownloaded) {
             this.emit("beatmapAlreadyDownloaded", beatmapId);
             return this.processQueue(downloadDirectory); // Continue to next download
         }
-
+    
         try {
             // Start the download using axios
             this.emit("beatmapDownloading", beatmapId, mirrorApi.name);
             const response = await axios({
                 method: 'get',
-                url: `${mirrorApi.url}${beatmapId}`,
+                url: fileUrl,
                 responseType: 'stream' // Ensure we get the response as a stream
             });
-
+    
+            // Extract the filename from the 'Content-Disposition' header if available
+            let filename = response.headers['content-disposition']?.match(/filename="(.+)"/)?.[1];
+            
+            // Fallback to default naming convention if filename is not found
+            if (!filename) {
+                filename = `${beatmapId}(${mirrorApi.name}).osz`;
+            }
+    
+            const beatmapDirectory = path.join(downloadDirectory, filename);
+    
             // Create a write stream for the file
             const writer = fs.createWriteStream(beatmapDirectory);
-
+    
             // Pipe the response data to the file
             response.data.pipe(writer);
-
+    
             // Return a promise that resolves when the file is finished writing
             return new Promise((resolve, reject) => {
                 writer.on('finish', () => {
                     this.emit("beatmapDownloadSuccess", beatmapId, mirrorApi.name);
                     resolve();
                 });
-
+    
                 writer.on('error', (err) => {
                     this.emit("beatmapDownloadFailed", beatmapId);
                     reject(err);
@@ -110,17 +121,18 @@ class osuDownloader extends EventEmitter {
             });
         } catch (error) {
             this.emit("beatmapDownloadFailed", beatmapId, error.message);
-
+    
             // Delete beatmap file if it exists
+            const beatmapDirectory = path.join(downloadDirectory, filename);
             if (fs.existsSync(beatmapDirectory)) {
                 fs.unlinkSync(beatmapDirectory);
             }
-
+    
             // Reattempt download with another API
             const next = (api + 1);
             if (!reattempt) return; // If set to not reattempt, break recursion
             if (!mirrors[next]) return; // If there are no more APIs to download from, break recursion
-
+    
             this.emit("beatmapDownloadReattempt", beatmapId);
             await this._attemptBeatmapsetDownload(beatmapId, downloadDirectory, next, true);
         }

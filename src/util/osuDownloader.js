@@ -74,18 +74,24 @@ class osuDownloader extends EventEmitter {
 
     // If file is already downloaded, skip
     const existingFiles = fs.readdirSync(this.downloadDirectory);
-    const alreadyDownloaded = existingFiles.some((file) => file.includes(toString(beatmapId)));
+    const alreadyDownloaded = existingFiles.some((file) => file.includes(beatmapId));
 
     if (alreadyDownloaded) {
       this.emit("beatmapAlreadyDownloaded", beatmapId);
-      return this.processQueue(downloadDirectory); // Continue to next download
+      return;
     }
 
-    const response = await axios({
-      method: "get",
-      url: fileUrl,
-      responseType: "stream",
-    });
+    let beatmapPayload;
+    try {
+      beatmapPayload = await axios({
+        method: "get",
+        url: fileUrl,
+        responseType: "stream",
+      });
+    } catch {
+      this.emit("beatmapDownloadFailed", beatmapId);
+      return;
+    }
 
     /**
      * Extract the filename from the 'Content-Disposition' header if available
@@ -93,7 +99,7 @@ class osuDownloader extends EventEmitter {
      */
     let fileName;
     try {
-      fileName = response.headers["content-disposition"].match(/filename="(.+)"/)[1];
+      fileName = beatmapPayload.headers["content-disposition"].match(/filename="(.+)"/)[1];
     } catch {
       fileName = `${beatmapId}(${mirrorApi.name}).osz`;
     }
@@ -109,7 +115,7 @@ class osuDownloader extends EventEmitter {
     try {
       const writer = fs.createWriteStream(beatmapDirectory);
 
-      response.data.pipe(writer); // Pipe the response data to the file
+      beatmapPayload.data.pipe(writer); // Pipe the response data to the file
 
       return new Promise((resolve, reject) => {
         writer.on("finish", () => {
@@ -122,8 +128,8 @@ class osuDownloader extends EventEmitter {
           reject(err);
         });
       });
-    } catch (error) {
-      this.emit("beatmapDownloadFailed", fileName, error.message);
+    } catch {
+      this.emit("beatmapDownloadFailed", fileName);
 
       // Delete beatmap file if it exists
       if (fs.existsSync(beatmapDirectory)) {

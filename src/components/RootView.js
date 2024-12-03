@@ -2,7 +2,7 @@ const { QWidget, FlexLayout } = require("@nodegui/nodegui");
 const DirectorySelector = require("./DirectorySelector");
 const CollectionIdInput = require("./CollectionIdInput");
 const DownloadButton = require("./DownloadButton");
-const osuDownloader = require("../util/osuDownloader")
+const osuDownloader = require("../util/osuDownloader");
 
 class RootView {
   constructor() {
@@ -54,8 +54,8 @@ class RootView {
           this.downloadButton.setDownloadStatus(`[${fileName}] Beatmap download completed successfully from ${mirrorName}`);
         });
 
-        this.osuDownloader.on("beatmapDownloadFailed", (fileName, errorMessage) => {
-          this.downloadButton.setDownloadStatus(`[${fileName}] Beatmap download failed: ${errorMessage}`);
+        this.osuDownloader.on("beatmapDownloadFailed", (fileName) => {
+          this.downloadButton.setDownloadStatus(`[${fileName}] Beatmap download failed`);
         });
 
         this.osuDownloader.on("beatmapDownloadReattempt", (fileName) => {

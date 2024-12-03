@@ -1,6 +1,6 @@
 # osu!Collector Downloader
 
-This program downloads beatmap collections from osu!Collector, it's as simple as that. [Download latest release](https://github.com/seanmcbroom/osu-collector-downloader/releases/tag/alpha-v0.3.0)
+This program downloads beatmap collections from osu!Collector, it's as simple as that. [Download latest release](https://github.com/seanmcbroom/osu-collector-downloader/releases)
 
 Linux - Build from source 🟨
 
@@ -18,7 +18,7 @@ MacOS - Build from source 🟨
 
 # Building from source
 
-Currently if you need to produce a build for MacOS you will need to build and pack from source. Cross platform builds are not supported in the packager, due to this limitation I cannot provide a MacOS build. However you're more than welcome to build from source on your own system.
+Currently if you need to produce a build for MacOS/Linux you will need to build and pack from source. Cross platform builds are not supported in the packager, due to this limitation I cannot provide a MacOS/Linux build. However you're more than welcome to build from source on your own system.
 
 - Clone this repository
 

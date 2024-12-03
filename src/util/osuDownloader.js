@@ -95,14 +95,14 @@ class osuDownloader extends EventEmitter {
              * Extract the filename from the 'Content-Disposition' header if available
              * Fallback to default naming convention if filename is not found
              */
-            let filename
+            let fileName
             try {
-                filename = response.headers['content-disposition']?.match(/filename="(.+)"/)?.[1];
+                fileName = response.headers['content-disposition']?.match(/filename="(.+)"/)?.[1];
             } catch {
-                filename = `${beatmapId}(${mirrorApi.name}).osz`;
+                fileName = `${beatmapId}(${mirrorApi.name}).osz`;
             }
     
-            const beatmapDirectory = path.join(downloadDirectory, filename);
+            const beatmapDirectory = path.join(downloadDirectory, fileName);
     
             // Create a write stream for the file
             const writer = fs.createWriteStream(beatmapDirectory);
@@ -126,7 +126,7 @@ class osuDownloader extends EventEmitter {
             this.emit("beatmapDownloadFailed", beatmapId, error.message);
     
             // Delete beatmap file if it exists
-            const beatmapDirectory = path.join(downloadDirectory, filename);
+            const beatmapDirectory = path.join(downloadDirectory, fileName);
             if (fs.existsSync(beatmapDirectory)) {
                 fs.unlinkSync(beatmapDirectory);
             }

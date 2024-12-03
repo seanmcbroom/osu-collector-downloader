@@ -91,11 +91,14 @@ class osuDownloader extends EventEmitter {
                 responseType: 'stream' // Ensure we get the response as a stream
             });
     
-            // Extract the filename from the 'Content-Disposition' header if available
-            let filename = response.headers['content-disposition']?.match(/filename="(.+)"/)?.[1];
-            
-            // Fallback to default naming convention if filename is not found
-            if (!filename) {
+            /**
+             * Extract the filename from the 'Content-Disposition' header if available
+             * Fallback to default naming convention if filename is not found
+             */
+            let filename
+            try {
+                filename = response.headers['content-disposition']?.match(/filename="(.+)"/)?.[1];
+            } catch {
                 filename = `${beatmapId}(${mirrorApi.name}).osz`;
             }
     

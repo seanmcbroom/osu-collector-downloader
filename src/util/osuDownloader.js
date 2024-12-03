@@ -84,7 +84,6 @@ class osuDownloader extends EventEmitter {
     
         try {
             // Start the download using axios
-            this.emit("beatmapDownloading", beatmapId, mirrorApi.name);
             const response = await axios({
                 method: 'get',
                 url: fileUrl,
@@ -101,6 +100,8 @@ class osuDownloader extends EventEmitter {
             } catch {
                 fileName = `${beatmapId}(${mirrorApi.name}).osz`;
             }
+
+            this.emit("beatmapDownloading", fileName, mirrorApi.name);
     
             const beatmapDirectory = path.join(downloadDirectory, fileName);
     
@@ -113,17 +114,17 @@ class osuDownloader extends EventEmitter {
             // Return a promise that resolves when the file is finished writing
             return new Promise((resolve, reject) => {
                 writer.on('finish', () => {
-                    this.emit("beatmapDownloadSuccess", beatmapId, mirrorApi.name);
+                    this.emit("beatmapDownloadSuccess", fileName, mirrorApi.name);
                     resolve();
                 });
     
                 writer.on('error', (err) => {
-                    this.emit("beatmapDownloadFailed", beatmapId);
+                    this.emit("beatmapDownloadFailed", fileName);
                     reject(err);
                 });
             });
         } catch (error) {
-            this.emit("beatmapDownloadFailed", beatmapId, error.message);
+            this.emit("beatmapDownloadFailed", fileName, error.message);
     
             // Delete beatmap file if it exists
             const beatmapDirectory = path.join(downloadDirectory, fileName);
@@ -136,7 +137,7 @@ class osuDownloader extends EventEmitter {
             if (!reattempt) return; // If set to not reattempt, break recursion
             if (!mirrors[next]) return; // If there are no more APIs to download from, break recursion
     
-            this.emit("beatmapDownloadReattempt", beatmapId);
+            this.emit("beatmapDownloadReattempt", fileName);
             await this._attemptBeatmapsetDownload(beatmapId, downloadDirectory, next, true);
         }
     }

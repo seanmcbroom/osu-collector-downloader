@@ -46,20 +46,20 @@ class RootView {
           this.downloadButton.setDownloadStatus(`[${beatmapId}] Beatmap already downloaded.`);
         });
 
-        this.osuDownloader.on("beatmapDownloading", (beatmapId, mirrorName) => {
-          this.downloadButton.setDownloadStatus(`[${beatmapId}] Beatmap downloading from ${mirrorName}`);
+        this.osuDownloader.on("beatmapDownloading", (fileName, mirrorName) => {
+          this.downloadButton.setDownloadStatus(`[${fileName}] Beatmap downloading from ${mirrorName}`);
         });
 
-        this.osuDownloader.on("beatmapDownloadSuccess", (beatmapId, mirrorName) => {
-          this.downloadButton.setDownloadStatus(`[${beatmapId}] Beatmap download completed successfully from ${mirrorName}`);
+        this.osuDownloader.on("beatmapDownloadSuccess", (fileName, mirrorName) => {
+          this.downloadButton.setDownloadStatus(`[${fileName}] Beatmap download completed successfully from ${mirrorName}`);
         });
 
-        this.osuDownloader.on("beatmapDownloadFailed", (beatmapId, errorMessage) => {
-          this.downloadButton.setDownloadStatus(`[${beatmapId}] Beatmap download failed: ${errorMessage}`);
+        this.osuDownloader.on("beatmapDownloadFailed", (fileName, errorMessage) => {
+          this.downloadButton.setDownloadStatus(`[${fileName}] Beatmap download failed: ${errorMessage}`);
         });
 
-        this.osuDownloader.on("beatmapDownloadReattempt", (beatmapId) => {
-          this.downloadButton.setDownloadStatus(`[${beatmapId}] Reattempting download...`);
+        this.osuDownloader.on("beatmapDownloadReattempt", (fileName) => {
+          this.downloadButton.setDownloadStatus(`[${fileName}] Reattempting download...`);
         });
 
         this.osuDownloader.on("downloadCompleted", () => {
